@@ -25,6 +25,9 @@ class ContactsCtrl:
 
     @input_error
     def change_contact(args, book):
+        if len(args) != 3:
+            return "Give me name, old phone and new phone please."
+
         name, old_phone, new_phone = args
         record = book.find(name)
         record.edit_phone(old_phone, new_phone)
@@ -58,6 +61,9 @@ class ContactsCtrl:
 
     @input_error
     def add_birthday(args, book):
+        if len(args) != 2:
+            return "Give me name and birthday date please."
+
         name, birthday_date = args
         record = book.find(name)
         record.add_birthday(birthday_date)
