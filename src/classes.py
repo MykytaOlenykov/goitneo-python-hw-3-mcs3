@@ -1,3 +1,6 @@
+import pickle
+
+from pathlib import Path
 from datetime import datetime
 from copy import copy
 from collections import UserDict, defaultdict
@@ -93,6 +96,8 @@ class Record:
 
 
 class AddressBook(UserDict):
+    __PATH_CONTACTS_DB = Path(__file__).parent / "db"
+
     def __str__(self):
         return "".join([f"{record}\n" for record in self.data.values()]).rstrip("\n")
 
@@ -154,3 +159,16 @@ class AddressBook(UserDict):
                 birthdays_per_week.append(weekday_list)
 
         return birthdays_per_week
+
+    def save_to_file(self, filename):
+        with open(self.__PATH_CONTACTS_DB / filename, "wb") as fh:
+            pickle.dump(self, fh)
+
+    def read_from_file(self, filename):
+        path = self.__PATH_CONTACTS_DB / filename
+
+        if not path.exists():
+            return
+
+        with open(path, "rb") as fh:
+            self.data = pickle.load(fh)
