@@ -4,7 +4,7 @@ from pathlib import Path
 from datetime import datetime
 from copy import copy
 from collections import UserDict, defaultdict
-from constants import WEEKDAYS, BIRTHDAY_DATE_FORMAT
+from constants import WEEKDAYS
 from errors import (
     InvalidPhone,
     InvalidBirthday,
@@ -36,11 +36,13 @@ class Phone(Field):
 
 
 class Birthday(Field):
+    _BIRTHDAY_DATE_FORMAT = "%d.%m.%Y"
+
     def __init__(self, value):
         try:
-            datetime.strptime(value, BIRTHDAY_DATE_FORMAT)
+            datetime.strptime(value, Birthday._BIRTHDAY_DATE_FORMAT)
         except ValueError:
-            raise InvalidBirthday("Birthday must be 'DD.MM.YYYY' format")
+            raise InvalidBirthday("Birthday must be 'DD.MM.YYYY' format.")
         else:
             super().__init__(value)
 
@@ -132,7 +134,7 @@ class AddressBook(UserDict):
             if birthday is None:
                 continue
             birthday_date = datetime.strptime(
-                birthday.value, BIRTHDAY_DATE_FORMAT
+                birthday.value, Birthday._BIRTHDAY_DATE_FORMAT
             ).date()
             birthday_this_year = birthday_date.replace(year=today.year)
 

@@ -5,5 +5,3 @@ WEEKDAYS = [
     "Thursday",
     "Friday",
 ]
-
-BIRTHDAY_DATE_FORMAT = "%d.%m.%Y"

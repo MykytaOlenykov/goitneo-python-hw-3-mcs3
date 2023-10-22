@@ -1,11 +1,11 @@
 class InvalidPhone(Exception):
-    def __init__(self, message, *args: object) -> None:
+    def __init__(self, message, *args):
         super().__init__(*args)
         self.message = message
 
 
 class InvalidBirthday(Exception):
-    def __init__(self, message, *args: object) -> None:
+    def __init__(self, message, *args):
         super().__init__(*args)
         self.message = message
 
